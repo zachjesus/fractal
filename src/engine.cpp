@@ -7,6 +7,9 @@
 #include "mandleBrot.h"
 #include <iostream>
 
+glm::vec3 camera = glm::vec3(0.0f, 0.0f, 0.0f);
+float zoom = .32f;
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
@@ -16,6 +19,18 @@ void processInput(GLFWwindow *window)
 {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     glfwSetWindowShouldClose(window, true);
+    if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    camera.z += 0.001f;
+    if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    camera.z -= 0.001f;
+    if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    camera.x -= 0.001f;
+    if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    camera.x += 0.001f;
+    if(glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+    zoom *= 1.002f; 
+    if(glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+    zoom /= 1.002f; 
 }
 
 int main()
@@ -43,7 +58,7 @@ int main()
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     
-    initMandleBrot(100);
+    initMandleBrot(80, 2);
 
     while(!glfwWindowShouldClose(window))
     {
@@ -52,7 +67,7 @@ int main()
         // glClearColor(0.976f, 0.976f, 0.976f, 0.2f);
         // glClear(GL_COLOR_BUFFER_BIT);
 
-        renderMandleBrot();
+        renderMandleBrot(camera, zoom);
 
         glfwSwapBuffers(window);
         glfwPollEvents();    

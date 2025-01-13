@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 #include "mandleBrot.h"
 #include "shaders.h"
+#include <iostream>
 
 static Shader& getShader() {
     static Shader localShader("../shaders/brot.vs", "../shaders/brot.fs");
@@ -16,10 +17,13 @@ static float vertices[] = {
 
 static unsigned int VBO, VAO;
 
-static int max;
+static int maxIterations;
+static float escapeRadius;
 
-void initMandleBrot(int maxIterations) {
-    max = maxIterations;
+void initMandleBrot(int iterations, float radius) {
+    maxIterations = iterations;
+    escapeRadius = radius;
+
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
@@ -31,10 +35,14 @@ void initMandleBrot(int maxIterations) {
     glEnableVertexAttribArray(0);
 }
 
-void renderMandleBrot() {
+void renderMandleBrot(glm::vec3 camera, float zoom) {
     Shader& ourShader = getShader();
     ourShader.use();
-    ourShader.setInt("maxIterations", max);
+    ourShader.setInt("maxIterations", maxIterations);
+    ourShader.setFloat("escapeRadius", escapeRadius);
+    ourShader.setFloat("u_zoomSize", zoom);
+    ourShader.setVec2("u_zoomCenter", glm::vec2(camera.x, camera.z));
+    ourShader.setVec2("iResolution", glm::vec2(800, 600));
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);  
 }
