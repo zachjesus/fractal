@@ -4,8 +4,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "shaders.h"
-#include "mandleBrot.h"
+#include "../fractals/mandleBrot.h"
 #include <iostream>
+
+//TODO
+//Add Pallete as an option to change within mandlebrot.
+//Add ImGui for user input
+//Burning ship fractal next.
 
 glm::vec3 camera = glm::vec3(0.0f, 0.0f, 0.0f);
 float zoom = .32f;
@@ -20,17 +25,17 @@ void processInput(GLFWwindow *window)
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     glfwSetWindowShouldClose(window, true);
     if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-    camera.z += 0.001f;
+    camera.z += 0.002f;
     if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-    camera.z -= 0.001f;
+    camera.z -= 0.002f;
     if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-    camera.x -= 0.001f;
+    camera.x -= 0.002f;
     if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-    camera.x += 0.001f;
+    camera.x += 0.002f;
     if(glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-    zoom *= 1.002f; 
+    zoom *= 1.02f; 
     if(glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-    zoom /= 1.002f; 
+    zoom /= 1.02f; 
 }
 
 int main()
@@ -58,7 +63,7 @@ int main()
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     
-    initMandleBrot(80, 2);
+    initMandleBrot(100, 4);
 
     while(!glfwWindowShouldClose(window))
     {

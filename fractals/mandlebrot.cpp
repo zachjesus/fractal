@@ -1,6 +1,6 @@
 #include <glad/glad.h>
 #include "mandleBrot.h"
-#include "shaders.h"
+#include "../src/shaders.h"
 #include <iostream>
 
 static Shader& getShader() {
