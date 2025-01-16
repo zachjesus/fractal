@@ -8,7 +8,6 @@
 #include <iostream>
 
 //TODO
-//Add Pallete as an option to change within mandlebrot.
 //Add ImGui for user input
 //Burning ship fractal next.
 
@@ -63,7 +62,11 @@ int main()
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     
-    initMandleBrot(100, 4);
+    initMandleBrot(100, 4, 
+                glm::vec3(0.8, 0.5, 0.4), 
+                glm::vec3(0.2, 0.3, 0.2), 
+                glm::vec3(2.0, 1.0, 1.0), 
+                glm::vec3(0.0, 0.25, 0.25), 0.5f, 9.0f);
 
     while(!glfwWindowShouldClose(window))
     {
@@ -78,6 +81,7 @@ int main()
         glfwPollEvents();    
     }
 
+    cleanupMandleBrot();
     glfwTerminate();
     return 0;
 }
