@@ -10,18 +10,17 @@
 #include "../fractals/mandelBrot.h"
 #include <iostream>
 
+float cameraSpeed = 0.002f;
+float zoomSpeed = 1.02f;
 glm::vec3 camera = glm::vec3(0.0f, 0.0f, 0.0f);
 float zoom = .32f;
 
-// Adjustable Mandelbrot parameters
 int iterations = 100;
 float radius = 4.0f;
 glm::vec3 a = glm::vec3(0.8f, 0.5f, 0.4f);
 glm::vec3 b = glm::vec3(0.2f, 0.3f, 0.2f);
-glm::vec3 c = glm::vec3(2.0f, 1.0f, 1.0f);
+glm::vec3 c = glm::vec3(1.0f, 1.0f, 1.0f);
 glm::vec3 d = glm::vec3(0.0f, 0.25f, 0.25f);
-float scale = 0.5f;
-float freq = 9.0f;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -31,19 +30,19 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 void processInput(GLFWwindow *window)
 {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-    glfwSetWindowShouldClose(window, true);
+        glfwSetWindowShouldClose(window, true);
     if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-    camera.z += 0.002f;
+        camera.z += cameraSpeed;
     if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-    camera.z -= 0.002f;
+        camera.z -= cameraSpeed;
     if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-    camera.x -= 0.002f;
+        camera.x -= cameraSpeed;
     if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-    camera.x += 0.002f;
+        camera.x += cameraSpeed;
     if(glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-    zoom *= 1.02f; 
+        zoom *= zoomSpeed;
     if(glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-    zoom /= 1.02f; 
+        zoom /= zoomSpeed;
 }
 
 int main()
@@ -86,7 +85,7 @@ int main()
                 glm::vec3(0.8, 0.5, 0.4), 
                 glm::vec3(0.2, 0.3, 0.2), 
                 glm::vec3(2.0, 1.0, 1.0), 
-                glm::vec3(0.0, 0.25, 0.25), 0.5f, 9.0f);
+                glm::vec3(0.0, 0.25, 0.25));
     
     while(!glfwWindowShouldClose(window))
     {
@@ -97,17 +96,17 @@ int main()
         ImGui::NewFrame();
 
         ImGui::Begin("Mandelbrot Settings");
-        ImGui::SliderInt("Fractal Iterations", &iterations, 50, 1000);
-        ImGui::SliderFloat("Escape Radius", &radius, 1.0f, 10.0f);
+        ImGui::SliderInt("Fractal Iterations", &iterations, 0, 300);
+        ImGui::SliderFloat("Escape Radius", &radius, 1.0f, 8.0f);
         ImGui::ColorEdit3("Color A", (float*)&a);
         ImGui::ColorEdit3("Color B", (float*)&b);
         ImGui::ColorEdit3("Color C", (float*)&c);
         ImGui::ColorEdit3("Color D", (float*)&d);
-        ImGui::SliderFloat("Rose Scale", &scale, 0.1f, 2.0f);
-        ImGui::SliderFloat("Rose Frequency", &freq, 1.0f, 20.0f);
+        ImGui::SliderFloat("Camera Speed", &cameraSpeed, 0.00001f, 0.01f);
+        ImGui::SliderFloat("Zoom Speed", &zoomSpeed, 1.001f, 1.1f);
         if (ImGui::Button("Update Mandelbrot"))
         {
-            updateMandelBrot(iterations, radius, a, b, c, d, scale, freq);
+            updateMandelBrot(iterations, radius, a, b, c, d);
         }
         ImGui::End();
         ImGui::Render();

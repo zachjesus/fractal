@@ -19,18 +19,16 @@ static float vertices[] = {
 static unsigned int VBO, VAO;
 
 int maxIterations;
-float escapeRadius, roseScale, roseFreq;
+float escapeRadius;
 glm::vec3 aColor, bColor, CColor, dColor;
 
-void initMandelBrot(int iterations, float radius, glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d, float scale, float freq) {
+void initMandelBrot(int iterations, float radius, glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d) {
     maxIterations = iterations;
     escapeRadius = radius;
     aColor = a;
     bColor = b;
     CColor = c;
     dColor = d;
-    roseScale = scale;
-    roseFreq = freq;
 
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -43,15 +41,13 @@ void initMandelBrot(int iterations, float radius, glm::vec3 a, glm::vec3 b, glm:
     glEnableVertexAttribArray(0);
 }
 
-void updateMandelBrot(int iterations, float radius, glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d, float scale, float freq) {
+void updateMandelBrot(int iterations, float radius, glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d) {
     maxIterations = iterations;
     escapeRadius = radius;
     aColor = a;
     bColor = b;
     CColor = c;
     dColor = d;
-    roseScale = scale;
-    roseFreq = freq;
 }
 
 void renderMandelBrot(glm::vec3 camera, float zoom) {
@@ -66,8 +62,6 @@ void renderMandelBrot(glm::vec3 camera, float zoom) {
     ourShader.setVec3("bColor", bColor);
     ourShader.setVec3("cColor", CColor);
     ourShader.setVec3("dColor", dColor);
-    ourShader.setFloat("roseScale", roseScale);
-    ourShader.setFloat("roseFreq", roseFreq);
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);  
 }
