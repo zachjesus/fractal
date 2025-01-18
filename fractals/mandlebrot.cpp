@@ -1,6 +1,6 @@
 #include <glad/glad.h>
 #include "mandleBrot.h"
-#include "../src/shaders.h"
+#include "../shaders/shaders.h"
 #include <glm/glm.hpp>
 #include <iostream>
 

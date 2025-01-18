@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "shaders.h"
+#include "../shaders/shaders.h"
 #include "../fractals/mandleBrot.h"
 #include <iostream>
 
@@ -67,13 +67,14 @@ int main()
                 glm::vec3(0.2, 0.3, 0.2), 
                 glm::vec3(2.0, 1.0, 1.0), 
                 glm::vec3(0.0, 0.25, 0.25), 0.5f, 9.0f);
+    
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); 
 
     while(!glfwWindowShouldClose(window))
     {
-        processInput(window);   
+        processInput(window); 
 
-        // glClearColor(0.976f, 0.976f, 0.976f, 0.2f);
-        // glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
         renderMandleBrot(camera, zoom);
 

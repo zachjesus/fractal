@@ -60,11 +60,12 @@ void main() {
     
     float minDist;
     float inSet = mandleBrotSet(c, minDist);
-    float rosePattern = sin(minDist * 25.0);
-    
-    vec3 mandelbrotColor = paletteColor(inSet);
-    vec3 roseColor = paletteColor(rosePattern);
-    vec3 finalColor = mix(mandelbrotColor, roseColor, 0.65);
+    float rosePattern = sin(minDist*roseFreq);
+    float isInSet = step(float(maxIterations - 1), inSet);
+
+    vec3 mandelbrotColor = paletteColor(inSet/maxIterations);
+    vec3 roseColor = paletteColor(rosePattern*roseScale);
+    vec3 finalColor = mix(mandelbrotColor, roseColor, isInSet);
     
     FragColor = vec4(finalColor, 1.0);
 }
