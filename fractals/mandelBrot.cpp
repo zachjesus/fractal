@@ -1,5 +1,5 @@
 #include <glad/glad.h>
-#include "mandleBrot.h"
+#include "mandelBrot.h"
 #include "../shaders/shaders.h"
 #include <glm/glm.hpp>
 #include <iostream>
@@ -22,7 +22,7 @@ int maxIterations;
 float escapeRadius, roseScale, roseFreq;
 glm::vec3 aColor, bColor, CColor, dColor;
 
-void initMandleBrot(int iterations, float radius, glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d, float scale, float freq) {
+void initMandelBrot(int iterations, float radius, glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d, float scale, float freq) {
     maxIterations = iterations;
     escapeRadius = radius;
     aColor = a;
@@ -43,7 +43,7 @@ void initMandleBrot(int iterations, float radius, glm::vec3 a, glm::vec3 b, glm:
     glEnableVertexAttribArray(0);
 }
 
-void updateMandleBrot(int iterations, float radius, glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d, float scale, float freq) {
+void updateMandelBrot(int iterations, float radius, glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d, float scale, float freq) {
     maxIterations = iterations;
     escapeRadius = radius;
     aColor = a;
@@ -54,7 +54,7 @@ void updateMandleBrot(int iterations, float radius, glm::vec3 a, glm::vec3 b, gl
     roseFreq = freq;
 }
 
-void renderMandleBrot(glm::vec3 camera, float zoom) {
+void renderMandelBrot(glm::vec3 camera, float zoom) {
     Shader& ourShader = getShader();
     ourShader.use();
     ourShader.setInt("maxIterations", maxIterations);
@@ -72,7 +72,7 @@ void renderMandleBrot(glm::vec3 camera, float zoom) {
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);  
 }
 
-void cleanupMandleBrot() {
+void cleanupMandelBrot() {
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
 }
